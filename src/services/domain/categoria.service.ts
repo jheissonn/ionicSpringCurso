@@ -1,5 +1,5 @@
-import { CategoriaDTO } from './../../models/categoria.dto';
-import { API_CONFIG } from './../../config/api.config';
+import { CategoriaDTO } from '../../models/categoria.dto';
+import { API_CONFIG } from '../../config/api.config';
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs/Rx';
