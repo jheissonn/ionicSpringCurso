@@ -21,13 +21,21 @@ export class HomePage {
 
   }
 
+  ionViewDidEnter() {
+    this.auth.refreshToken()
+      .subscribe(response => {
+        this.auth.successfulLogin(response.headers.get('Authorization'));
+        this.navCtrl.setRoot('CategoriasPage');
+      },
+      error => {});  
+  }
+
   login(){
     this.auth.authenticate(this.creds).subscribe(response =>{
       this.auth.successfulLogin(response.headers.get('Authorization'));
       this.navCtrl.setRoot('CategoriasPage');
     },
     error =>{});
-    console.log(this.creds);
   }
 
   ionViewWillEnter() {
