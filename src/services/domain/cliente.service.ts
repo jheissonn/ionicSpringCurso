@@ -17,12 +17,23 @@ export class ClienteService{
         let token = this.storage.getLocalUser().token;
         let authHeader = new HttpHeaders({'Authorization': 'Bearer ' + token})
         return this.http.get<ClienteDTO>(
-            `${API_CONFIG.baseUrl}/cliente/email?value=${email}`,
+            `${API_CONFIG.baseUrl}/clientes/email?value=${email}`,
             {'headers': authHeader});
     }
     getImageFromBucket(id: String): Observable<any>{
         let url = `${API_CONFIG.bucketBaseUrl}/cp${id}.jpg`
         return this.http.get(url, {responseType: 'blob'})
+    }
+
+    insert(obj : ClienteDTO) {
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/clientes`, 
+            obj,
+            { 
+                observe: 'response', 
+                responseType: 'text'
+            }
+        ); 
     }
 
 
