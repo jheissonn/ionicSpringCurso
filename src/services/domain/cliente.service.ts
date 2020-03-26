@@ -14,6 +14,13 @@ export class ClienteService{
 
     }
 
+    findById(id: String) {
+        let token = this.storage.getLocalUser().token;
+        let authHeader = new HttpHeaders({'Authorization': 'Bearer ' + token})
+        return this.http.get(`${API_CONFIG.baseUrl}/clientes/${id}`, {'headers': authHeader});
+        
+    }
+
     findByEmail(email: string) {
         let token = this.storage.getLocalUser().token;
         let authHeader = new HttpHeaders({'Authorization': 'Bearer ' + token})
