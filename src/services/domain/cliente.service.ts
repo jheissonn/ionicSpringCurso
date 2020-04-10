@@ -1,3 +1,4 @@
+import { ImageUtilService } from './../image.service';
 import { StorageService } from './../storage.service';
 import { API_CONFIG } from './../../config/api.config';
 import { ClienteDTO } from './../../models/Cliente.dto';
@@ -9,7 +10,8 @@ import { Observable } from 'rxjs/Rx';
 export class ClienteService{
     constructor(
         public http: HttpClient,
-        public storage: StorageService
+        public storage: StorageService,
+        public imageUtilService: ImageUtilService
     ){
 
     }
@@ -45,5 +47,17 @@ export class ClienteService{
         ); 
     }
 
+    uploadPicture(picture) {
+        let pictureBlob = this.imageUtilService.dataUriToBlob(picture);
+        let formData : FormData = new FormData();
+        let token = this.storage.getLocalUser().token;
+        let authHeader = new HttpHeaders({'Authorization': 'Bearer ' + token, observe: 'response',responseType: 'text'})
+        formData.set('file', pictureBlob, 'file.png');
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/clientes/picture`, 
+            formData,
+            {'headers': authHeader}
+        ); 
+    }
 
 }
